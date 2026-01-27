@@ -71,4 +71,9 @@ log(Cᵢ) = α + β log(Qᵢ) + εᵢ, εᵢ ~ Normal(0, σ²)
 - Single linear model assumed  
 - Future: Apply to real USGS data (Vermillion River), add regime-specific or seasonal parameters, use MCMC for flexibility
 
+This repository contains the complete submission for the AQUA005 task:  
+- main_analysis.ipynb (code & results)  
+- AQUA005_Report_Tejas.pdf (manuscript)  
+- Presentation recording (MP4)
+
 Prepared for AQUA005 Mini Research Task.
