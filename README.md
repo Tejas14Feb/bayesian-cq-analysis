@@ -84,4 +84,9 @@ log(Cᵢ) = α + β × log(Qᵢ) + εᵢ
 - No hierarchical modeling (single “site”)
 - Future work: Use real USGS/NWIS data from Vermillion River or similar sites, incorporate seasonal effects, add flow-regime splits, or use MCMC (PyMC/Stan) for non-conjugate extensions
 
+This repository contains the complete submission for the AQUA005 task:  
+- main_analysis.ipynb (code & results)  
+- AQUA005_Report_Tejas.pdf (manuscript)  
+- Presentation recording (MP4)
+
 **Notebook location:** `notebooks/main_analysis.ipynb` (full code, plots, and calculations)
