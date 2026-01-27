@@ -3,7 +3,6 @@
 **Author:** Tejas Budharamu  
 **Affiliation:** University of South Dakota, Department of Computer Science  
 **Date:** January 2026  
-**GitHub Repository:** [https://github.com/your-username/AQUA005-CQ-Phosphorus](https://github.com/your-username/AQUA005-CQ-Phosphorus) (replace with your actual link)
 
 ## Task Overview
 This repository contains the complete submission for the AQUA005 Mini Research Task:  
