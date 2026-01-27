@@ -1,92 +1,75 @@
 # AQUA005 – Bayesian Concentration–Discharge (C–Q) Analysis for Phosphorus
 
-**Author:** Tejas  
+**Author:** Tejas Budharamu  
+**Affiliation:** University of South Dakota, Department of Computer Science  
 **Date:** January 2026  
-**GitHub Repository:** [link to your repo]
+**GitHub Repository:** [https://github.com/your-username/AQUA005-CQ-Phosphorus](https://github.com/your-username/AQUA005-CQ-Phosphorus) (replace with your actual link)
 
 ## Task Overview
 This repository contains the complete submission for the AQUA005 Mini Research Task:  
 Bayesian regression analysis of phosphorus concentration (C) vs. stream discharge (Q) relationships.
 
 ## Data (Task 1)
-**Source:** Synthetic dataset (n = 200 observations)  
-**Reason for synthetic data:** Limited time and insufficient paired discrete phosphorus + continuous discharge samples from USGS site 06479010 (Vermillion River near Vermillion, SD) made real-data merging impractical for this deadline. Synthetic data is generated to simulate realistic dilution-dominated behavior typical in many Midwestern U.S. tributaries with point-source or baseflow phosphorus inputs.
+**Source:** Synthetic dataset (n=200 observations)  
+**Reason for synthetic data:** Time constraints and insufficient paired discrete phosphorus + continuous discharge samples from USGS site 06479010 (Vermillion River near Vermillion, SD) made real-data merging impractical for this deadline.
 
-**Simulation assumptions (fully reproducible):**
-- Discharge (Q): log(Q) ~ Uniform(-2, 3) → Q ranges from ≈0.135 to ≈20.085 (arbitrary scaled units, e.g. m³/s)
-- Concentration (C): log(C) = 0.5 + (-0.4) × log(Q) + ε, where ε ~ Normal(0, 0.3²)
-- True generating parameters: α = 0.5, β = -0.4 (moderate dilution), σ = 0.3
+**Generation assumptions (fully reproducible):**
+- Discharge (Q): log(Q) ~ Uniform(-2, 3) → Q ranges ≈0.135 to 20.085 (scaled units, e.g. m³/s)  
+- Concentration (C): log(C) = 0.5 – 0.4 × log(Q) + ε, where ε ~ Normal(0, 0.3²)  
+- True parameters: α = 0.5, β = -0.4 (moderate dilution), σ = 0.3  
 
-**Temporal coverage and resolution:** Not applicable (synthetic, no real time stamps). Equivalent to daily samples over ~several years for demonstration.
+**Preprocessing & transformations:**  
+Natural log applied to Q and C to linearize power-law relationship and stabilize variance. No missing values or outliers (clean synthetic data).
 
-**Preprocessing & transformations:**
-- Natural log transformation applied to both Q and C → stabilizes variance and linearizes the expected power-law C–Q relationship (C ∝ Q^β)
-- No missing values or outliers removed (clean synthetic data)
-- No units conversion needed
-
-**Exploratory findings:**
-- Strong negative correlation between log(Q) and log(C): r ≈ -0.899
-- Scatter plots show clear power-law dilution pattern (decreasing C with increasing Q)
+**Exploratory findings:**  
+- Strong negative correlation: log(Q) vs log(C) = -0.899  
+- Visualizations saved in `/figures/` (e.g., log-log scatter showing dilution trend)
 
 ## Bayesian Model (Task 2)
-**Model equation:**
-log(Cᵢ) = α + β × log(Qᵢ) + εᵢ  
-εᵢ ~ Normal(0, σ²)   (independent errors)
+**Equation:**  
+log(Cᵢ) = α + β log(Qᵢ) + εᵢ, εᵢ ~ Normal(0, σ²)
 
-**Likelihood:** Normal (appropriate for continuous concentration data after log transform)
-
-**Priors (vague, weakly informative):**
+**Priors (vague, conjugate):**  
 - α ~ Normal(0, 100)  
 - β ~ Normal(0, 100)  
-- σ² ~ InvGamma(0.001, 0.001)  (very diffuse)
+- σ² ~ InverseGamma(0.001, 0.001)
 
-**Why these priors?** Large variance ensures data dominate inference while maintaining conjugate form for analytical solution.
-
-**Model choice rationale:** Log-linear form is standard for C–Q relationships (power-law behavior common in hydrology). No extensions (regime-specific or seasonal parameters) implemented due to time constraint and single synthetic regime.
+**Likelihood:** Normal  
+**Inference:** Analytical Normal-Inverse-Gamma update (exact posterior, no MCMC)
 
 ## Model Fitting & Validation (Task 3)
-**Method:** Analytical posterior via conjugate Normal-Inverse-Gamma update (no MCMC needed — exact & fast)
+**Method:** Conjugate posterior update  
+**Posterior estimates:**  
+- α ≈ 0.519 [95% CI: 0.478, 0.560]  
+- β ≈ -0.402 [95% CI: -0.430, -0.374]  
+- σ ≈ 0.289  
 
-**Posterior estimates (mean and approximate 95% credible intervals):**
-- α (baseline log-concentration) ≈ 0.519 [0.478, 0.560]  
-- β (C–Q slope) ≈ -0.402 [-0.430, -0.374]  
-- σ (residual standard deviation) ≈ 0.289
-
-**Model quality:**
-- Parameter uncertainty: Narrow credible intervals → strong data signal, low posterior uncertainty
-- Model fit: R² ≈ 0.81 (high explanatory power on log scale)
-- Convergence: Not applicable (analytical solution)
-- Posterior predictive check: Simulated data from posterior closely matches observed scatter (visual check in notebook)
-- Prior sensitivity: Vague priors → posterior very close to maximum likelihood (data-driven). Tighter priors would shrink β toward 0, but not realistic here.
+**Fit quality:** R² ≈ 0.81 (strong), narrow credible intervals (low uncertainty)  
+**Validation:** Posterior predictive checks (simulated data overlays observed scatter well)  
+**Prior sensitivity:** Vague priors ensure data dominance
 
 ## Interpretation of C–Q Relationships (Task 4)
-**Slope interpretation:**
-- β ≈ -0.402 (entire 95% CI negative) → **clear dilution behavior**
-- For every 10-fold increase in discharge, phosphorus concentration decreases by a factor of ≈0.40 (≈60% reduction)
+**Slope:** β ≈ -0.402 (entire CI negative) → **clear dilution**  
+**Magnitude:** ~60% decrease in concentration per 10× increase in discharge  
+**Behavior:** Dilution (not enrichment or chemostasis)  
+**Mechanism:** Constant phosphorus loading (e.g., point sources/baseflow) diluted by low-P high-flow water  
+**Uncertainty:** Narrow credible interval → high confidence in dilution diagnosis
 
-**Behavior classification:**
-- Dilution (β < 0): Dominant pattern
-- Not enrichment (β > 0)
-- Not chemostatic (β ≈ 0)
+## Deliverables
+- `notebooks/main_analysis.ipynb`: Full code (data generation, exploration, model, fit, plots)  
+- `figures/`: Saved visualizations (e.g., `cq_scatter_plots.png`)  
+- `AQUA005_Report_Tejas.pdf`: Scientific Reports-style manuscript  
+- Presentation recording (MP4): 8–10 min narrated slides
 
-**Transport mechanism insights:**
-- Dilution suggests relatively constant phosphorus loading (e.g., point sources such as wastewater treatment plants, tile drainage, or stable groundwater/baseflow) diluted by low-phosphorus water during high-flow events.
-- Limited evidence of surface runoff or erosion mobilizing additional P during storms.
-- Consistent with patterns observed in some agricultural/urban-influenced Midwestern rivers.
+## How to Run
+1. Open `notebooks/main_analysis.ipynb` in Jupyter Notebook, JupyterLab, or Google Colab  
+2. Run all cells (data generated in memory – no external files required)  
+3. Plots automatically save to `/figures/` folder  
+4. Review results: posterior estimates, plots, interpretation
 
-**Uncertainty influence:**
-- Narrow credible intervals around β provide high confidence in dilution diagnosis.
-- In real, sparser data, wider intervals might make it harder to confidently distinguish dilution from weak chemostasis or mixed behavior.
+## Limitations & Future Work
+- Synthetic data only (no real seasonality, hysteresis, or multi-regime shifts)  
+- Single linear model assumed  
+- Future: Apply to real USGS data (Vermillion River), add regime-specific or seasonal parameters, use MCMC for flexibility
 
-## Limitations & Future Directions
-- Synthetic data lacks real-world complexity (seasonality, hysteresis, multiple flow regimes, non-stationarity)
-- Single linear model assumed; real systems often require piecewise or GAM-style approaches
-- No hierarchical modeling (single “site”)
-- Future work: Use real USGS/NWIS data from Vermillion River or similar sites, incorporate seasonal effects, add flow-regime splits, or use MCMC (PyMC/Stan) for non-conjugate extensions
-
-This repository contains the complete submission for the AQUA005 task:  
-- main_analysis.ipynb (code & results)  
-- AQUA005_Report_Tejas.pdf (manuscript)  
-- Presentation recording (MP4)
-
-**Notebook location:** `notebooks/main_analysis.ipynb` (full code, plots, and calculations)
+Prepared for AQUA005 Mini Research Task.
