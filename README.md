@@ -1,7 +1,6 @@
-# AQUA005 – Bayesian Concentration–Discharge (C–Q) Analysis for Phosphorus
+# Bayesian Concentration–Discharge (C–Q) Analysis for Phosphorus
 
 **Author:** Tejas Budharamu  
-**Affiliation:** University of South Dakota, Department of Computer Science  
 **Date:** January 2026  
 
 ## Task Overview
@@ -10,7 +9,6 @@ Bayesian regression analysis of phosphorus concentration (C) vs. stream discharg
 
 ## Data (Task 1)
 **Source:** Synthetic dataset (n=200 observations)  
-**Reason for synthetic data:** Time constraints and insufficient paired discrete phosphorus + continuous discharge samples from USGS site 06479010 (Vermillion River near Vermillion, SD) made real-data merging impractical for this deadline.
 
 **Generation assumptions (fully reproducible):**
 - Discharge (Q): log(Q) ~ Uniform(-2, 3) → Q ranges ≈0.135 to 20.085 (scaled units, e.g. m³/s)  
@@ -71,9 +69,7 @@ log(Cᵢ) = α + β log(Qᵢ) + εᵢ, εᵢ ~ Normal(0, σ²)
 - Single linear model assumed  
 - Future: Apply to real USGS data (Vermillion River), add regime-specific or seasonal parameters, use MCMC for flexibility
 
-This repository contains the complete submission for the AQUA005 task:  
+This repository contains:  
 - main_analysis.ipynb (code & results)  
 - AQUA005_Report_Tejas.pdf (manuscript)  
 - Presentation recording (MP4)
-
-Prepared for AQUA005 Mini Research Task.
