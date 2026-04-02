@@ -3,6 +3,14 @@
 **Author:** Tejas Budharamu  
 **Date:** January 2026  
 
+> Bayesian statistical modeling of phosphorus concentration-discharge (C–Q) relationships using conjugate Bayesian regression in Python.
+##  Tech Stack
+
+**Core:** Python • Jupyter Notebook  
+**Data & Analysis:** Pandas • NumPy • SciPy  
+**Visualization:** Matplotlib • Seaborn  
+**Modeling:** Conjugate Bayesian Regression (Normal-Inverse-Gamma)
+
 ## Task Overview
 This repository contains the complete submission for the AQUA005 Mini Research Task:  
 Bayesian regression analysis of phosphorus concentration (C) vs. stream discharge (Q) relationships.
