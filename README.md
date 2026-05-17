@@ -63,8 +63,6 @@ log(Cᵢ) = α + β log(Qᵢ) + εᵢ, εᵢ ~ Normal(0, σ²)
 ## Deliverables
 - `notebooks/main_analysis.ipynb`: Full code (data generation, exploration, model, fit, plots)  
 - `figures/`: Saved visualizations (e.g., `cq_scatter_plots.png`)  
-- `AQUA005_Report_Tejas.pdf`: Scientific Reports-style manuscript  
-- Presentation recording (MP4): 8–10 min narrated slides
 
 ## How to Run
 1. Open `notebooks/main_analysis.ipynb` in Jupyter Notebook, JupyterLab, or Google Colab  
@@ -76,8 +74,3 @@ log(Cᵢ) = α + β log(Qᵢ) + εᵢ, εᵢ ~ Normal(0, σ²)
 - Synthetic data only (no real seasonality, hysteresis, or multi-regime shifts)  
 - Single linear model assumed  
 - Future: Apply to real USGS data (Vermillion River), add regime-specific or seasonal parameters, use MCMC for flexibility
-
-This repository contains:  
-- main_analysis.ipynb (code & results)  
-- AQUA005_Report_Tejas.pdf (manuscript)  
-- Presentation recording (MP4)
